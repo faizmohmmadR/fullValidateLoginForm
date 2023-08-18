@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <style>
+      body {
+        background-color: #d9d4c5;
+        margin: 0px;
+        padding: 0px;
+      }
+
+      .container {
+        margin: 10% auto;
+        background-color: white;
+        width: 40vw;
+        height: 70vh;
+        box-shadow: 0px 0px 10px #6c3770;
+        border-radius: 15px;
+      }
+      @media only screen and (max-width: 700px) {
+        .container {
+          width: 80vw;
+          /* background-color: red; */
+        }
+      }
+      #login-form {
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+        width: 80%;
+      }
+
+      #login-form input {
+        padding: 8px;
+        outline: 0;
+        border: 2px solid gainsboro;
+      }
+      #login-form p {
+        font-size: 13px;
+        color: red;
+      }
+
+      #login-form .btn {
+        padding: 8px;
+        outline: 0;
+        border: 0;
+        color: white;
+        background-color: #6c3770;
+      }
+      #login-form .btn:hover {
+        cursor: pointer;
+      }
+
+      #login-form input:hover {
+        border-color: blue;
+      }
+
+      .title {
+        text-align: center;
+        padding-top: 4%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="title">Login Page</h1>
+      <form action="./index.html" id="login-form">
+        <label for="username">User Name</label>
+        <input type="text" id="username" />
+        <p></p>
+        <label for="password">Password</label>
+        <input type="password" id="password" />
+        <p></p>
+        <label for="phone">Phone</label>
+        <input type="tel" name="tel" id="phone" />
+        <p></p>
+        <input class="btn" type="submit" />
+      </form>
+    </div>
+
+    <script>
+      const form = document.getElementById("login-form");
+      const username = document.getElementById("username");
+      const password = document.getElementById("password");
+      const phone = document.getElementById("phone");
+      const text = document.getElementById("text");
+
+      let un = false;
+      let ps = false;
+      let ph = false;
+
+      let up = /^[a-zA-Z][\w._]{5,24}$/;
+      let ep = 0;
+      let vp = /^00088783498/;
+
+      form.addEventListener("submit", (e) => {
+        if (!(un === true && ps === true && ph === true)) {
+          e.preventDefault();
+          if (!un) {
+            username.nextElementSibling.innerText = "invalid user name!!";
+            username.style.borderColor = "red";
+          }
+
+          if (!ps) {
+            password.nextElementSibling.innerText = "weake password!!";
+            password.style.borderColor = "red";
+          }
+          if (!ph) {
+            phone.nextElementSibling.innerText = "invalid phone number";
+            phone.style.borderColor = "red";
+          }
+        }
+      });
+
+      username.addEventListener("keyup", (e) => {
+        if (e.target.value) {
+          username.nextElementSibling.innerText = "";
+          if (up.test(e.target.value)) {
+            username.style.borderColor = "green";
+            un = true;
+          } else {
+            username.nextElementSibling.innerText = "invalid phone number";
+            username.style.borderColor = "red";
+            un = false;
+          }
+        } else {
+          username.nextElementSibling.innerText =
+            "please enter valid phone number!!";
+          un = false;
+        }
+      });
+
+      password.addEventListener("keyup", (e) => {
+        if (e.target.value) {
+          password.nextElementSibling.innerText = "";
+          ep = 0;
+          ep += /[A-Z]/.test(e.target.value) ? 1 : 0;
+          ep += /[a-z]/.test(e.target.value) ? 1 : 0;
+          ep += /[0-9]/.test(e.target.value) ? 1 : 0;
+          ep += /\W/.test(e.target.value) ? 1 : 0;
+          ep += e.target.value.length > 6 ? 1 : 0;
+          if (ep === 5) {
+            password.style.borderColor = "green";
+            ps = true;
+          } else {
+            password.nextElementSibling.innerText = "weake password!!";
+            password.style.borderColor = "red";
+            ps = false;
+          }
+        } else {
+          password.nextElementSibling.innerText = "pleas write a vali email";
+          ps = false;
+        }
+      });
+
+      phone.addEventListener("keyup", (e) => {
+        if (e.target.value) {
+          phone.nextElementSibling.innerText = "";
+          if (vp.test(e.target.value)) {
+            phone.style.borderColor = "green";
+            ph = true;
+          } else {
+            phone.nextElementSibling.innerText = "invalid phone number";
+            phone.style.borderColor = "red";
+            ph = false;
+          }
+        } else {
+          phone.nextElementSibling.innerText =
+            "please enter valid phone number!!";
+          ph = false;
+        }
+      });
+    </script>
+  </body>
+</html>
